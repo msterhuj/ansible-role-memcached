@@ -1,2 +1,32 @@
 ---
 # tasks file for memcached
+- name: "Install memcached package"
+  apt:
+    name: "memcached"
+    state: "present"
+  tags:
+    - "install"
+  become: true
+
+- name: "Push config"
+  template:
+    src: "etc/memcached.conf.j2"
+    dest: "/etc/memcached.conf"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  tags:
+    - "config"
+  become: true
+  register: "memcached_config"
+
+- name: "Ensure memcached is enabled and retarted"
+  service:
+    name: "memcached"
+    state: "restarted"
+    enabled: true
+  tags:
+    - "config"
+    - "service"
+  become: true
+  when: "memcached_config.changed"

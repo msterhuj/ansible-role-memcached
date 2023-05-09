@@ -1,2 +1,8 @@
 ---
 # defaults file for memcached
+memcached_logfile: "/var/log/memcached.log"
+memcached_verbose_level: 0 # 0 = silent, 1 = startup/shutdown info, 2 = verbose, 3 = very verbose
+memcached_memory_limit: 64 # MB
+memcached_port: 11211
+memcached_listen_ip: "127.0.0.1"
+memcached_max_connections: 1024
